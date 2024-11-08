@@ -2,7 +2,8 @@ import axios from "axios";
 import { Formik } from "formik";
 import React from "react";
 
-const API_URL = "http://localhost:5000/api/users";
+const API_URL = "https://testing-api-mys0.onrender.com/api/users";
+// const API_URL = "http://localhost:5000/api/users";
 
 const App = () => {
   const handleLogin = async (values) => {
