@@ -13,8 +13,8 @@ const App = () => {
     console.log("Login attempt with:", email, password);
 
     // Store the token in a cookie if login is successful
-      // Cookies.set("token", "response.data.token");
-      // setCookie("response.data.token"); // Update state to display the token
+    // Cookies.set("token", "response.data.token");
+    // setCookie("response.data.token"); // Update state to display the token
     try {
       const response = await axios.post(
         `${API_URL}/login`,
@@ -26,7 +26,7 @@ const App = () => {
           withCredentials: true,
         }
       );
-
+      console.log(Cookies.get("token"));
       console.log("Response data:", response.data);
     } catch (error) {
       if (error.response) {
@@ -46,12 +46,15 @@ const App = () => {
   useEffect(() => {
     const token = Cookies.get("token");
     setCookie(token);
+    x;
+    console.log(Cookies.get("token"));
   }, []); // Only run on initial render to check for an existing token
+  console.log(Cookies.get("token"));
 
   return (
     <div>
-      <h1>{cookie ? `Logged in with token: ${cookie}` : "Not logged in"}</h1>
-      {cookie && <button onClick={handleLogout}>Logout</button>}
+      <h1>`Logged in with token: ${cookie}` : "Not logged in"</h1>
+      <button onClick={handleLogout}>Logout</button>
       <Formik
         initialValues={{
           email: "",
