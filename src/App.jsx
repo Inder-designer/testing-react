@@ -1,24 +1,22 @@
 import axios from "axios";
 import { Formik } from "formik";
-import Cookies from "js-cookie";
-import React, { useEffect } from "react";
+import React from "react";
 
 const API_URL = "https://testing-api-mys0.onrender.com/api/users";
+// const API_URL = "http://localhost:5000/api/users";
 
 const App = () => {
-  const [cookie, setCookie] = React.useState("");
-
   const handleLogin = async (values) => {
     const { email, password } = values;
-    console.log("Login attempt with:", email, password);
+    console.log(email, password);
 
-    // Store the token in a cookie if login is successful
-    // Cookies.set("token", "response.data.token");
-    // setCookie("response.data.token"); // Update state to display the token
     try {
       const response = await axios.post(
         `${API_URL}/login`,
-        { email, password },
+        {
+          email,
+          password,
+        },
         {
           headers: {
             "Content-Type": "application/json",
@@ -26,34 +24,23 @@ const App = () => {
           withCredentials: true,
         }
       );
-      console.log(Cookies.get("token"));
-      console.log("Response data:", response.data);
+      const data = response;
+      console.log("data:", data);
     } catch (error) {
       if (error.response) {
-        console.error("Error data:", error.response.data);
-        console.error("Error status:", error.response.status);
+        // The server responded with a status other than 2xx
+        console.log("Error data:", error.response.data);
+        console.log("Error status:", error.response.status);
       } else {
-        console.error("Error:", error.message);
+        // Network error or request not sent
+        console.log("Error:", error.message);
       }
     }
   };
 
-  const handleLogout = () => {
-    Cookies.remove("token");
-    setCookie(""); // Clear token from the state as well
-  };
-
-  useEffect(() => {
-    const token = Cookies.get("token");
-    setCookie(token);
-    console.log(Cookies.get("token"));
-  }, []); // Only run on initial render to check for an existing token
-  console.log(Cookies.get("token"));
-
   return (
     <div>
-      <h1>`Logged in with token: ${cookie}` : "Not logged in"</h1>
-      <button onClick={handleLogout}>Logout</button>
+      {/* login form */}
       <Formik
         initialValues={{
           email: "",
@@ -70,6 +57,7 @@ const App = () => {
               value={values.email}
               onChange={handleChange}
             />
+
             <input
               type="password"
               name="password"
@@ -77,7 +65,8 @@ const App = () => {
               value={values.password}
               onChange={handleChange}
             />
-            <button type="submit">Login</button>
+
+            <button type="submit">Submit</button>
           </form>
         )}
       </Formik>
