@@ -46,7 +46,6 @@ const App = () => {
   useEffect(() => {
     const token = Cookies.get("token");
     setCookie(token);
-    x;
     console.log(Cookies.get("token"));
   }, []); // Only run on initial render to check for an existing token
   console.log(Cookies.get("token"));
