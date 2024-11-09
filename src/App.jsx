@@ -6,7 +6,7 @@ import React, { useEffect } from "react";
 const API_URL = "https://testing-api-mys0.onrender.com/api/users";
 
 const App = () => {
-  const [cookie, setCookie] = React.useState(null);
+  const [cookie, setCookie] = React.useState("");
 
   const handleLogin = async (values) => {
     const { email, password } = values;
@@ -40,7 +40,7 @@ const App = () => {
 
   const handleLogout = () => {
     Cookies.remove("token");
-    setCookie(null); // Clear token from the state as well
+    setCookie(""); // Clear token from the state as well
   };
 
   useEffect(() => {
